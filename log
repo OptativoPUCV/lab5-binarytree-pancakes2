@@ -28,3 +28,20 @@ Wed 08 May 2024 08:29:42 PM UTC:
  tests:  25|1
 total_score: 60/70
 119f49a
+Wed 08 May 2024 08:35:31 PM UTC: 
+ treemap.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
+In file included from test.c:4:
+treemap.c:184:7: error: redefinition of ‘searchTreeMap’
+  184 | Pair *searchTreeMap(TreeMap * tree, void* key) {
+      |       ^~~~~~~~~~~~~
+treemap.c:164:7: note: previous definition of ‘searchTreeMap’ with type ‘Pair *(TreeMap *, void *)’ {aka ‘Pair *(struct TreeMap *, void *)’}
+  164 | Pair *searchTreeMap(TreeMap * tree, void* key) {
+      |       ^~~~~~~~~~~~~
+treemap.c: In function ‘searchTreeMap’:
+treemap.c:205:23: error: assignment to ‘TreeNode *’ {aka ‘struct TreeNode *’} from incompatible pointer type ‘Pair *’ [-Werror=incompatible-pointer-types]
+  205 |         tree->current = upperBound;
+      |                       ^
+cc1: all warnings being treated as errors
+Compilation failed
+21971d2
