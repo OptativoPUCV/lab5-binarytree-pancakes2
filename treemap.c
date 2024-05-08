@@ -87,6 +87,11 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     }
 }
 
+/*
+Función auxiliar recursiva para encontrar el nodo con el valor mínimo.
+Se recorre el árbol hacia la izquierda hasta que no haya más nodos a la izquierda.
+*/ 
+
 TreeNode * minimum(TreeNode * x){
     if (x->left == NULL) {
         return x;
@@ -96,8 +101,55 @@ TreeNode * minimum(TreeNode * x){
 }
 
 
+
 void removeNode(TreeMap * tree, TreeNode* node) {
 
+    /*
+    Caso 1: Sin hijos
+    Si el nodo simplemente no tiene hijos, se elimina el nodo mismo y se libera la memoria.
+    */ 
+
+    if (node->left == NULL && node->right == NULL) { 
+        if (node->parent->left == node) {
+            node->parent->left = NULL;
+        } else {
+            node->parent->right = NULL;
+        }
+        free(node);
+
+    } 
+
+    /*
+    Caso 3: Dos hijos
+    Si el nodo tiene DOS hijos, necesitamos encontrar el sucesor (ordenado) del nodo.
+    (El sucesor mas pequeño con una llave mayor que la llave del nodo a eliminar),
+    reemplazar el nodo con el sucesor y eliminar el sucesor.
+    */ 
+
+    else if (node->left != NULL && node->right != NULL) 
+    { 
+        TreeNode* successor = minimum(node->right);
+        node->pair = successor->pair;
+        removeNode(tree, successor);
+    }
+
+    /*
+    Caso 2: Un hijo
+    Si el nodo tiene un hijo, necesitamos reemplazar el nodo con su hijo
+    y liberar la memoria de ese nodo.
+    */ 
+
+    else 
+    { 
+        TreeNode* child = (node->left != NULL) ? node->left : node->right;
+        if (node->parent->left == node) {
+            node->parent->left = child;
+        } else {
+            node->parent->right = child;
+        }
+        child->parent = node->parent;
+        free(node);
+    }
 }
 
 void eraseTreeMap(TreeMap * tree, void* key){
