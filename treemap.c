@@ -54,11 +54,13 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
     if (tree->root == NULL) {
         TreeNode *newNode = createTreeNode(key, value);
         tree->root = newNode;
+        tree->current = newNode;
         return;
     }
     TreeNode *root = tree->root;
 
     // Hacemos la comparación de los valores de los nodos
+    // Dependiendo de la llave, se decide si se va a la izquierda o derecha
     while (root != NULL) {
         if (is_equal(tree, root->pair->key, key)) {
             return;
@@ -68,6 +70,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
                 TreeNode *newNode = createTreeNode(key, value);
                 root->left = newNode;
                 newNode->parent = root;
+                tree->current = newNode; // Actualizamos el puntero current
                 return;
             }
             root = root->left;
@@ -76,6 +79,7 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
                 TreeNode *newNode = createTreeNode(key, value);
                 root->right = newNode;
                 newNode->parent = root;
+                tree->current = newNode; // Actualizamos el puntero current
                 return;
             }
             root = root->right;
