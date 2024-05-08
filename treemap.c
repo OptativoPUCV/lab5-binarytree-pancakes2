@@ -36,17 +36,24 @@ TreeNode * createTreeNode(void* key, void * value) {
     return new;
 }
 
-TreeMap* createTreeMap(int (*lower_than) (void* key1, void* key2)) {
-    TreeMap* newTreeMap = (TreeMap*) malloc(sizeof(TreeMap));
+TreeMap *createTreeMap(int (*lower_than) (void* key1, void* key2)) {
+
+    // Se asigna memoria para el árbol
+    TreeMap *newTreeMap = (TreeMap*) malloc(sizeof(TreeMap));
     if (newTreeMap == NULL) {
         return NULL; 
     }
+
+    // Se inicializan los campos del arbol a nulo
     newTreeMap->root = NULL; 
     newTreeMap->current = NULL; 
+
+    // Se asigna el campo lower_than a una función lower_than arbitraria.
+    // (En nuestro caso, la función lower_than_string)
     newTreeMap->lower_than = lower_than; 
+
     return newTreeMap;
 }
-
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
 
@@ -206,23 +213,32 @@ Pair * upperBound(TreeMap * tree, void* key) {
 }
 
 Pair *firstTreeMap(TreeMap * tree) {
+
+    // Caso base donde el árbol está vacío o el puntero current es NULL
     if (tree == NULL || tree->root == NULL) return NULL;
 
     TreeNode *current = tree->root;
+
+    // Se iteran los nodos (desde la raíz) hacia la izquierda hasta que no haya más nodos a la izquierda.
     while (current->left != NULL) {
         current = current->left;
     }
+
     tree->current = current;
     return current->pair;
 }
 
 Pair *nextTreeMap(TreeMap * tree) {
+
+    // Caso base donde el árbol está vacío o el puntero current es NULL
     if (tree == NULL || tree->current == NULL) return NULL;
 
     TreeNode *current = tree->current;
 
+    // Si el nodo actual tiene un hijo derecho, entonces se busca su sucesor más pequeño
     if (current->right != NULL) {
         current = current->right;
+        // Se busca el nodo más pequeño a la derecha
         while (current->left != NULL) {
             current = current->left;
         }
@@ -231,6 +247,7 @@ Pair *nextTreeMap(TreeMap * tree) {
     }
 
     TreeNode *parent = current->parent;
+    // Si no tiene hijo derecho, se busca el primer ancestro mayor al nodo actual
     while (parent != NULL && current == parent->right) {
         current = parent;
         parent = current->parent;
@@ -241,3 +258,4 @@ Pair *nextTreeMap(TreeMap * tree) {
     tree->current = parent;
     return parent->pair;
 }
+
