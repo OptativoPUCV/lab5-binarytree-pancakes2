@@ -106,11 +106,23 @@ void eraseTreeMap(TreeMap * tree, void* key){
 
 }
 
+Pair *searchTreeMap(TreeMap * tree, void* key) {
+    TreeNode *current = tree->root;
 
+    // Se itera el arbol de manera binaria aprovechando la propiedad de orden
+    while (current != NULL) {
+        // Si se encuentra la llave, se actualiza el puntero current y se retorna el par
+        if (is_equal(tree, current->pair->key, key)) {
+            tree->current = current;
+            return current->pair;
+        } else if (tree->lower_than(key, current->pair->key)) {
+            current = current->left;
+        } else {
+            current = current->right;
+        }
+    }
 
-
-Pair * searchTreeMap(TreeMap * tree, void* key) {
-    return NULL;
+    return NULL; // Retorna NULL si no es encontrado
 }
 
 
