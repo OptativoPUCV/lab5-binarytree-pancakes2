@@ -181,31 +181,27 @@ Pair *searchTreeMap(TreeMap * tree, void* key) {
 }
 
 
-Pair *searchTreeMap(TreeMap * tree, void* key) {
+Pair * upperBound(TreeMap * tree, void* key) {
     TreeNode *current = tree->root;
     Pair *upperBound = NULL;
 
-    // Itera de forma binaria el arbol aprovechando la propiedad de orden
     while (current != NULL) {
-
-        // Si la llave es encontrada, se actualiza el puntero current y se retorna el par
+        // Si la llave es encontrada, se retorna el par
         if (is_equal(tree, current->pair->key, key)) {
-            tree->current = current;
-            return current->pair;
-        } else if (tree->lower_than(key, current->pair->key)) {
-            upperBound = current->pair;
+            return current->pair; 
+        } // Si la llave actual es menor que la llave dada, se actualiza el upperBound y se va a la derecha
+        else if (tree->lower_than(key, current->pair->key)) 
+        {
+            upperBound = current->pair; 
             current = current->left;
-        } else {
+        } // Si la llave actual es mayor que la llave dada, se va a la izquierda 
+        else 
+        {
             current = current->right;
         }
     }
 
-    // Si la llave NO es encontrada, entonces se retornael primer par mayor o igual a la llave
-    if (upperBound != NULL) {
-        tree->current = upperBound;
-    }
-
-    // Retorna NULL si no se encuentra la llave
+    // Si la llave NO es encontrada, entonces se retorna el primer par igual o mayor que la llave dada
     return upperBound; 
 }
 

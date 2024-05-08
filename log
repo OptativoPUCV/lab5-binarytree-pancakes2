@@ -45,3 +45,9 @@ treemap.c:205:23: error: assignment to ‘TreeNode *’ {aka ‘struct TreeNode 
 cc1: all warnings being treated as errors
 Compilation failed
 21971d2
+Wed 08 May 2024 08:40:24 PM UTC: 
+ treemap.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
+ tests:  29|0
+total_score: 70/70
+f1109b0
